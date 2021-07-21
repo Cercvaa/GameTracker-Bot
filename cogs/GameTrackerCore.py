@@ -4,6 +4,7 @@ from datetime import datetime
 from tabulate import tabulate
 from bs4 import BeautifulSoup
 from discord.ext import commands
+from gtcore import scraper
 
 DATABASE_URL = ""
 
