@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+body {
+    margin: 0;
+    font-family: 'Rubik', sans-serif;
+    background: #161E2D;
+}
+
+
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    color: red;
+}
+
+.btn {
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.btn-primary {
+    background: #2E3956;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.btn-success {
+    background: #484B96;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.bg-dark {
+    background-color: #222C45 !important;
+}
+
+
+.table {
+    margin-top: 70px;
+    margin-right: 50px;
+    margin-bottom: 100px;
+}
+
+
+.table-dark {
+    background-color: #0A1635;
+}
+
+.table-hover {
+    color: red;
+}
+
+thead {
+    background-color: #0A1635;
+}
+tbody {
+    background-color: #222C45;
+}
+
+
+table.table-bordered > thead > tr > th{
+    border: 3px solid black;
+}
+table.table-bordered > tbody > tr > td{
+    border: 3px solid black;
+}
+
+.table-bordered td, .table-bordered th{
+    border-color: black !important;
+}
+
+tr td:first-child {
+    color: #FB667A;
+}
+
+#commands {
+    margin-top: 100px;
+    font-size: 30px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 6px;
+
+}   

@@ -1,0 +1,160 @@
+/*
+body {
+    margin: 0;
+    font-family: Consolas;
+    background: #161E2D;
+}
+
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+header {
+    background: #222C45;
+}
+
+
+header::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.logo {
+    float: left;
+    height: 50px;
+    padding: 10px 0;
+}
+
+nav {
+    float: center;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li {
+    display: inline-block;
+    margin-left: 70px;
+    padding-top: 25px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+}
+
+*/
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+body {
+    margin: 0;
+    font-family: 'Rubik', sans-serif;
+    background: #161E2D;
+}
+
+
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    color: red;
+}
+
+.btn {
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.btn-primary {
+    background: #2E3956;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.btn-success {
+    background: #484B96;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.bg-dark {
+    background-color: #222C45 !important;
+}
+
+
+.container-sm {
+    align-items: center !important;
+}
+
+.text-center {
+    margin-top: 20px;
+}
+
+#photo {
+    margin-right: 20px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.card {
+    background: #222C45;
+    margin-top: 40px; 
+    border-radius: 20px; 
+    height: auto; 
+    width: 100%;
+    border: 2px solid black;
+}
+
+.card-body {
+    padding-top: 20px;
+    padding-left: 40px;
+}
+
+.card-text {
+    color: white;
+}
+
+#stats {
+    color: white;
+    font-size: 30px;
+}
+
+.servers {
+    position: relative;
+    margin-left: 225px;
+    margin-top: 40px;
+    width: 250px;
+    height: 207px;
+    background-color: #222C45;
+}
+
+.mgeli {
+    color: white;
+    margin-top: 50px;
+    margin-left: 30px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 6px;
+
+}

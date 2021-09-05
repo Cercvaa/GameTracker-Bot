@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=s, initial-scale=1.0">
+    <link rel = "stylesheet" href = "style-2.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">
+            <img src="GameTracker1.png" alt="" height="50">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" href="https://discord.gg/KxWNFJdAsY"><i class = "fab fa-discord"></i>  Join Our Discord</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="commands.html"><i class = "fa fa-terminal" aria-hidden="true"></i>  Commands</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="https://gametracke-bot.gitbook.io/gametracker-bot/"><i class = "fa fa-question-circle"></i>  Help</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <a href="https://discord.com/oauth2/authorize?client_id=787358079498453052&permissions=456768&scope=bot" class="btn btn-primary"><i class = "fa fa-server"></i>  Add To Server</a>
+              <a href = "https://www.paypal.com/paypalme/GameTrackerBot" class = "btn btn-success"><i class = "fas fa-donate"></i>  Donate</a>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+      <div class = "container-sm">
+        <p id = "commands" class = "text-center" style = "color: white;">The bot commands list</p>
+      </div>
+
+      <div class = "container">
+        <table class="table table-bordered" style="color: white; border: 3px solid black;">
+            <thead>
+              <tr>
+                <th scope="col">Commands</th>
+                <th scope="col">Description</th>
+                <th scope="col">Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>>info</td>
+                <td>Get banner for your server.</td>
+                <td>>info [ip:port], also you can use it when you had set name on ip.</td>
+              </tr>
+              <tr>
+                <td>>rank</td>
+                <td>See server rank.</td>
+                <td>>rank [ip:port]</td>
+              </tr>
+              <tr>
+                <td>>maps</td>
+                <td>Get information which maps are used frequently.</td>
+                <td>>maps [ip:port]</td>
+              </tr>
+              <tr>
+                <td>>currentmap</td>
+                <td>You can see which map is running on the server</td>
+                <td>>currentmap<span style = "color: red;">(alias: >cm)</span> [ip:port]</td>
+              </tr>
+              <tr>
+                <td>>top10</td>
+                <td>See top-10 server players.</td>
+                <td>>top10 [ip:port]</td>
+              </tr>
+              <tr>
+                <td>>top15</td>
+                <td>See top-15 server players</td>
+                <td>>top15 [ip:port]</td>
+              </tr>
+              <tr>
+                <td>>playerinfo</td>
+                <td>Get player banner.</td>
+                <td>>playerinfo<span style = "color: red;">(alias: >pi)</span> [ip:port] [player name]</td>
+              </tr>
+              <tr>
+                <td>>playerscore</td>
+                <td>Get player score banner.</td>
+                <td>>playerscore<span style = "color: red;">(alias: >ps)</span> [ip:port] [player name]</td>
+              </tr>
+              <tr>
+                <td>>playertime</td>
+                <td>Get player time banner.</td>
+                <td>>playertime<span style = "color: red;">(alias: >pt)</span> [ip:port] [player name]</td>
+              </tr>
+              <tr>
+                <td>>setname</td>
+                <td>With this command you create name for your ip address and search with name.</td>
+                <td>>setname [ip:port] [ip name]</td>
+              </tr>
+              <tr>
+                <td>>queue</td>
+                <td>See all ips and names you set.</td>
+                <td>>queue</td>
+              </tr>
+              <tr>
+                <td>>clear</td>
+                <td>Clear queue.</td>
+                <td>>clear</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      
+</body>
+</html>
