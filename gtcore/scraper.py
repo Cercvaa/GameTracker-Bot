@@ -1,4 +1,4 @@
-import discord,asyncio,requests,bs4,re,tabulate,sqlite3
+import requests,bs4,re,tabulate,sqlite3
 from tabulate import tabulate
 from bs4 import BeautifulSoup
 
@@ -113,9 +113,14 @@ class GTcore():
             time_played.append(td.text.strip())
         time_played.pop(0)
 
-        headers = ["Name", "Score", "Time Played"]
-        make_table = zip(pl, scores, time_played)
-        return tabulate(make_table, headers = headers)
+        print(len(pl))
+        print(pl)
+        if len(pl) > 10:
+            headers = ["Name", "Score", "Time Played"]
+            make_table = zip(pl, scores, time_played)
+            return tabulate(make_table, headers = headers)
+        else:
+            return False
 
 
     def scan(self):
@@ -189,7 +194,86 @@ class GTcore():
         scores_min.remove(scores_min[0])
         scores_min.pop() 
 
+
+        headers = ["Name", "Score", "Time Played", "Score/Min"]
+        table = zip(players, scores, time, scores_min)
+        return tabulate(table, headers=headers, tablefmt="plain")
+
+
+
+    def top15(self):
+        page = requests.get(f"https://www.gametracker.com/server_info/{self.ip}/top_players/?searchipp=25#search")
+        soup = BeautifulSoup(page.content, "html.parser")
+
+
+        table = soup.find("table", class_="table_lst table_lst_spn")
+        data = table.find("tbody")
+
+        players = list()
+        scores = list()
+        time = list()
+        scores_min = list()
+        for aleko in soup.find_all("a", href = re.compile("^/player")):
+            players.append(aleko.text.strip())
+
+        rows = table.find_all("tr")
+
+        i = 0
+        for tr in rows:
+            td = tr.find_all("td")[3]
+            i += 1
+            scores.append(td.text.strip())
+            if i == 15:
+                break
+
+
+        j = 0
+        for tr in rows:
+            td = tr.find_all("td")[4]
+            j += 1
+            time.append(td.text.strip())
+            if j == 15:
+                break
+
+
+
+        k = 0
+        for tr in rows:
+            td = tr.find_all("td")[5]
+            k += 1
+            scores_min.append(td.text.strip())
+            if k == 15:
+                break
+
+        
+
         headers = ["Name", "Score", "Time Played", "Score/Min"]
         table = zip(players, scores, time, scores_min)
         return tabulate(table, headers=headers)
+
+
+    def player_banner(self, name : str):
+        page = requests.get(f"https://www.gametracker.com/player/{name}/{self.ip}/")
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        image = soup.find("img", id = "banner_560x95")
+
+        return image['src']
+
+
+    def player_graph(self, name : str):
+        page = requests.get(f"https://www.gametracker.com/player/{name}/{self.ip}/")
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        graph_player_score = soup.find("img", id = "graph_player_score")
+
+        return graph_player_score['src']
+
+    def player_time(self, name : str):
+        page = requests.get(f"https://www.gametracker.com/player/{name}/{self.ip}/")
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        graph_player_time = soup.find("img", id = "graph_player_time")
+
+        return graph_player_time['src']
 

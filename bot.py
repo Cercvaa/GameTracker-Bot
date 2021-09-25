@@ -1,24 +1,33 @@
-import discord,os
+import logging,lightbulb,hikari,os,mysql.connector
 from os import environ, listdir
-from discord.ext import commands
+from config import TOKEN,HOST,USER,PASSWD,DATABASE
 
-client = commands.AutoShardedBot(command_prefix=">")
-client.remove_command("help")
+conn = mysql.connector.connect(
+    host = HOST, 
+    user = USER, 
+    passwd = PASSWD,
+    database = DATABASE
+)
 
-TOKEN = ""
+c.execute("CREATE TABLE IF NOT EXISTS costumers(ip TEXT, ipname TEXT, guild_id TEXT)")
+c.execute("CREATE TABLE IF NOT EXISTS language(lan TEXT, guild_id TEXT)")
+conn.commit()
 
-@client.command()
-async def load(ctx, extension):
-    client.load_extension(f"cogs.{extension}")
-
-@client.command()
-async def unload(ctx, extension):
-    client.unload_extension(f"cogs.{extension}")
-
+bot = lightbulb.Bot(
+    token = TOKEN, #change it
+    prefix = ">",
+    intents = hikari.Intents.ALL
+)
+bot.remove_command("help")
+print(bot.heartbeat())
 
 for filename in listdir('./cogs'):
     if filename.endswith(".py"):
-        client.load_extension(f"cogs.{filename[:-3]}")
+        bot.load_extension(f"cogs.{filename[:-3]}")
 
 
-client.run(TOKEN)
+bot.run(
+    activity=hikari.Activity(name = ">help | gametrackerbot.cf", type = hikari.ActivityType.PLAYING), 
+    asyncio_debug=True
+)
+

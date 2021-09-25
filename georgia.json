@@ -1,0 +1,25 @@
+{
+    "ip_error": "❌ Ip ვერ მოიძებნა.",
+
+    "server_limit": "❌ შენ შეგიძლია შეინახო მხოლოდ 5 სერვერის აიპი.",
+    "setname_error": "ჩაწერე აიპი ან თქვენს მიერ შენახული აიპის სახელი.",
+    "setname_set": "ეს აიპის სახელი უკვე შენახულია მონაცემთა ბაზაში.",
+
+    "clear_response": "მონაცემთა ბაზა გასუფთავდა.",
+    "delete_response_success": "აიპის სახელი: {} წაიშალა მონაცემთა ბაზიდან.",
+    "delete_response_error": "❌ აიპი სახელი: {} ვერ მოიძებნა",
+    "delete_error": "❌ ჩაწერე აიპის სახელი.",
+    
+    "player_error": "ჩაწერე აიპი(აიპის სახელი) და მოთამაშეს სახელი.",
+    "player_response_error": "მოთამაშეს სახელი ვერ მოიძებნა.",
+
+    "title": "დახმარება",
+    "description": "``ნახეთ როგორ უნდა გამოიყენოთ ქომმანდები``[აქ](https://gametrackerbot.cf/commands.html)",
+    "commands_field": "ქომმანდები",
+    "commands_value": "``>info,>rank,>maps,>top10,>top15,>setname,>queue,>clear,>playerinfo,>playerscore,>playertime,>currentmap,>serverplayers,>delete``",
+
+    "links_field": "ლინკები",
+    "links_value": "[Server](https://discord.gg/KxWNFJdAsY) | [See video](https://www.youtube.com/watch?v=F4oPVzY-zcg) | [See Website](https://gametrackerbot.cf/) | [Invite](https://discord.com/oauth2/authorize?client_id=787358079498453052&permissions=456768&scope=bot)",
+    "owner_text": "ბოტი დამზადებულია Cercva#3125-ს მიერ"
+
+}

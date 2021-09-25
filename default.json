@@ -1,0 +1,25 @@
+{
+    "ip_error": "The server you requested is not in the GameTracker database.",
+
+    "server_limit": "You can only save 5 ips",
+    "setname_error": "You need to write ip and ipname.",
+    "setname_set": "Ipname already is in database.",
+
+    "clear_response": "```Queue is cleared.```",
+    "delete_response_success": "Ipname: ``{name}`` deleted from the database.",
+    "delete_response_error": "I can't delete ipname: ``{name}``",
+    "delete_error": "You need to write ipname.",
+    
+    "player_error": "Write ip(ipname) and player name.",
+    "player_response_error": "We could not find the player name you requested.",
+
+    "title": "Help",
+    "description": "``See commands usage``[here](https://gametrackerbot.cf/commands.html)",
+    "commands_field": "Commands",
+    "commands_value": "``>info,>rank,>maps,>top10,>top15,>setname,>queue,>clear,>playerinfo,>playerscore,>playertime,>currentmap,>serverplayers,>delete``",
+
+    "links_field": "ლინკები",
+    "links_value": "[Server](https://discord.gg/KxWNFJdAsY) | [See video](https://www.youtube.com/watch?v=F4oPVzY-zcg) | [See Website](https://gametrackerbot.cf/) | [Invite](https://discord.com/oauth2/authorize?client_id=787358079498453052&permissions=456768&scope=bot)",
+    "owner_text": "The bot is created by Cercva#3125"
+
+}
