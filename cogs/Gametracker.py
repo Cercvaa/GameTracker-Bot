@@ -1,12 +1,18 @@
-import lightbulb,tabulate,hikari,googlesearch,mysql.connector
+import lightbulb,tabulate,hikari,mysql.connector
+from lightbulb.events import CommandErrorEvent
 from tabulate import tabulate
 from gtcore import scraper
 from config import COLOR,HOST,USER,PASSWD,DATABASE
 from settings.setting import checkdata, checklan, get_lang
-from googlesearch import search
 
 
 class GT(lightbulb.Plugin):
+
+
+    @lightbulb.listener(CommandErrorEvent)
+    async def command_not_found(self, event):
+        if isinstance(event.exception, lightbulb.errors.CommandNotFound):
+            print("Unknown Command")
 
     
     @lightbulb.command()
@@ -62,7 +68,7 @@ class GT(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
 
 
@@ -72,7 +78,7 @@ class GT(lightbulb.Plugin):
                 message = await event.message.respond(embed = embed)
                 return message
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description = get_lang(result[0], "setname_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description = get_lang(result[0], "setname_error"), color = COLOR)
                 message = await event.message.respond(embed = embed)
                 return message
 
@@ -129,7 +135,7 @@ class GT(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
             if result is None:
@@ -137,7 +143,7 @@ class GT(lightbulb.Plugin):
                 message = await event.message.respond(embed = embed)
                 return message
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description = get_lang(result[0], "setname_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description = get_lang(result[0], "setname_error"), color = COLOR)
                 message = await event.message.respond(embed = embed)
                 return message
 
@@ -170,7 +176,7 @@ class GT(lightbulb.Plugin):
         else:
             core = scraper.GTcore(ip)
             if core.checkip() == False:
-                await ctx.send(get_lang("en", "ip_error") if lang is None else get_lang(lang[0], "ip_error"))
+                await ctx.respond(get_lang("en", "ip_error") if lang is None else get_lang(lang[0], "ip_error"))
             else:
                 title = core.name()
                 maps = core.maps()
@@ -191,7 +197,7 @@ class GT(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
         
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
@@ -200,7 +206,7 @@ class GT(lightbulb.Plugin):
                 message = await event.message.respond(embed = embed)
                 return message
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description = get_lang(result[0], "setname_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description = get_lang(result[0], "setname_error"), color = COLOR)
                 message = await event.message.respond(embed = embed)
                 return message
 
@@ -255,7 +261,7 @@ class GT(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
             if result is None:
@@ -263,7 +269,7 @@ class GT(lightbulb.Plugin):
                 message = await event.message.respond(embed = embed)
                 return message
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description = get_lang(result[0], "setname_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description = get_lang(result[0], "setname_error"), color = COLOR)
                 message = await event.message.respond(embed = embed)
                 return message
 
@@ -286,16 +292,14 @@ class GT(lightbulb.Plugin):
         if result is not None:
             core = scraper.GTcore(result[0])
             top = core.top10(result[0])
-            embed = hikari.Embed(description = f"```{top}```")
-            await ctx.respond(embed = embed)
+            await ctx.respond(f"```{top}```")
         else:
             core = scraper.GTcore(ip)
             if core.checkip() == False:
                 await ctx.respond(get_lang("en", "ip_error") if lang is None else get_lang(lang[0], "ip_error"))
             else:
                 top = core.top10(ip)
-                embed = hikari.Embed(description = f"```{top}```")
-                await ctx.respond(embed = embed)
+                await ctx.respond(f"```{top}```")
 
     @top10.command_error()
     async def on_top10_error(self, event):
@@ -307,7 +311,7 @@ class GT(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
             if result is None:
@@ -315,7 +319,7 @@ class GT(lightbulb.Plugin):
                 message = await event.message.respond(embed = embed)
                 return message
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description = get_lang(result[0], "setname_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description = get_lang(result[0], "setname_error"), color = COLOR)
                 message = await event.message.respond(embed = embed)
                 return message
 
@@ -364,14 +368,14 @@ class GT(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
             if result is None:
                 embed = hikari.Embed(title = "❌ **Error**", description="Write ip(ipname) and player name.", color = COLOR)
                 return await event.message.respond(embed = embed)
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description=get_lang(result[0], "player_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description=get_lang(result[0], "player_error"), color = COLOR)
                 return await event.message.respond(embed = embed)
     
     @lightbulb.command(aliases = ["ps"])
@@ -417,14 +421,14 @@ class GT(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
             if result is None:
                 embed = hikari.Embed(title = "❌ **Error**", description="Write ip(ipname) and player name.", color = COLOR)
                 return await event.message.respond(embed = embed)
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description=get_lang(result[0], "player_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description=get_lang(result[0], "player_error"), color = COLOR)
                 return await event.message.respond(embed = embed)
 
     
@@ -468,14 +472,14 @@ class GT(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
             if result is None:
                 embed = hikari.Embed(title = "❌ **Error**", description="Write ip(ipname) and player name.", color = COLOR)
                 return await event.message.respond(embed = embed)
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description=get_lang(result[0], "player_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description=get_lang(result[0], "player_error"), color = COLOR)
                 return await event.message.respond(embed = embed)
 
     
@@ -509,7 +513,7 @@ class GT(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
             if result is None:
@@ -517,7 +521,7 @@ class GT(lightbulb.Plugin):
                 message = await event.message.respond(embed = embed)
                 return message
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description = get_lang(result[0], "setname_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description = get_lang(result[0], "setname_error"), color = COLOR)
                 message = await event.message.respond(embed = embed)
                 return message
 
@@ -556,7 +560,7 @@ class GT(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
             if result is None:
@@ -564,7 +568,7 @@ class GT(lightbulb.Plugin):
                 message = await event.message.respond(embed = embed)
                 return message
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description = get_lang(result[0], "setname_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description = get_lang(result[0], "setname_error"), color = COLOR)
                 message = await event.message.respond(embed = embed)
                 return message
 
@@ -572,7 +576,7 @@ class GT(lightbulb.Plugin):
     @lightbulb.command()
     async def help(self, ctx):
         embed = hikari.Embed(title = "Help", description = "``See All Commands Usage``[Here](https://gametrackerbot.cf/commands.html).", color = COLOR)
-        embed.add_field(name = "Commands:", value = "``>info,>rank,>maps,>top10,>top15,>setname,>queue,>clear,>playerinfo,>playerscore,>playertime,>currentmap,>serverplayers,>delete``")
+        embed.add_field(name = "Commands:", value = "``>info,>rank,>maps,>top10,>top15,>setname,>queue,>clear,>playerinfo,>playerscore,>playertime,>currentmap,>serverplayers,>delete,>lang``")
         embed.add_field(name = "Links", value="[Server](https://discord.gg/KxWNFJdAsY) | [See video](https://www.youtube.com/watch?v=F4oPVzY-zcg) | [See Website](https://gametrackerbot.cf/) | [Invite](https://discord.com/oauth2/authorize?client_id=787358079498453052&permissions=456768&scope=bot) | [Star this project](https://github.com/Cercvinatori/GameTracker-Bot)", inline = False)
         embed.set_footer(text="Bot made by Cercva#4848", icon="https://cdn.discordapp.com/avatars/481341632478707727/a_544e33ec02ff27cea89101fa42ce9809.webp?size=256")
         await ctx.respond(embed = embed)
@@ -580,3 +584,7 @@ class GT(lightbulb.Plugin):
 
 def load(bot):
     bot.add_plugin(GT())
+
+
+def unload(bot):
+    bot.remove_plugin("GT")
