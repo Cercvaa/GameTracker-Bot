@@ -5,7 +5,7 @@ from lightbulb.events import CommandErrorEvent
 from config import PREFIX,TOKEN,HOST,USER,PASSWD,DATABASE,COLOR
 from gtcore import scraper
 
-languages = ['ge', 'en']
+languages = ['ge', 'en', 'ru']
 
 class Database(lightbulb.Plugin):
 
@@ -20,10 +20,9 @@ class Database(lightbulb.Plugin):
         c = conn.cursor()
         
         if lan not in languages:
-            embed = hikari.Embed(title = "Available Languages", description = "``ge``, ``en``", color = COLOR)
+            embed = hikari.Embed(title = "Available Languages", description = "``ge``, ``en``, ``ru``", color = COLOR)
             await ctx.respond(embed = embed)
-
-        if lan in languages:
+        elif lan in languages:
             c.execute(f"SELECT lan FROM language WHERE guild_id = '{ctx.get_guild().id}'")
             result = c.fetchone()
 
@@ -36,7 +35,7 @@ class Database(lightbulb.Plugin):
                 conn.commit()
                 await ctx.respond(f"language has been updated to ``{lan}``")
 
-    
+    @lightbulb.check(lightbulb.has_guild_permissions(hikari.Permissions.ADMINISTRATOR))
     @lightbulb.command()
     async def setname(self, ctx, ip : str, *, ipname : str):
 
@@ -49,18 +48,20 @@ class Database(lightbulb.Plugin):
         c = conn.cursor()
 
         core = scraper.GTcore(ip)
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{ctx.get_guild().id}'")
+        lans = c.fetchone()  
+
+        if lans is not None:
+            lan = lans[0]
+        else:
+            lan = "en"
+        
         if core.checkip() == True and checkdata(ctx.get_guild().id):
             setn = list()
             count = 0
 
-            results = c.execute(f"SELECT ipname FROM costumers WHERE guild_id = '{ctx.get_guild().id}'").fetchall()
-            lans = c.execute(f"SELECT lan FROM language WHERE guild_id = '{ctx.get_guild().id}'").fetchone()
-
-
-            if lans is not None:
-                lan = lans[0]
-            else:
-                lan = "en"
+            c.execute(f"SELECT ipname FROM costumers WHERE guild_id = '{ctx.get_guild().id}'")
+            results = c.fetchall()
 
 
             for result in results:
@@ -92,14 +93,18 @@ class Database(lightbulb.Plugin):
         )
         c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
             if result is None:
                 embed = hikari.Embed(title = "❌ **Error**", description = "You need to write ip and ipname.", color = COLOR)
                 return await event.message.respond(embed = embed)
             else:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description = get_lang(result[0], "setname_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description = get_lang(result[0], "setname_error"), color = COLOR)
+                return await event.message.respond(embed = embed)
+        elif isinstance(event.exception, lightbulb.errors.MissingRequiredPermission):
+            if result is None:
+                embed = hikari.Embed(title = "❌ **Error**", description = "You don't have enough permissions to use command.")
                 return await event.message.respond(embed = embed)
 
     @lightbulb.command()
@@ -110,7 +115,7 @@ class Database(lightbulb.Plugin):
             passwd = PASSWD,
             database = DATABASE
         )
-        c = conn.commit()
+        c = conn.cursor()
         
 
         c.execute(f"SELECT * FROM costumers WHERE guild_id = '{ctx.get_guild().id}'")
@@ -131,7 +136,7 @@ class Database(lightbulb.Plugin):
             passwd = PASSWD,
             database = DATABASE
         )
-        c = conn.commit()
+        c = conn.cursor()
 
         c.execute(f"SELECT ip FROM costumers WHERE guild_id = '{ctx.get_guild().id}' AND ipname = '{name}'")
         result = c.fetchone()
@@ -155,14 +160,14 @@ class Database(lightbulb.Plugin):
             passwd = PASSWD,
             database = DATABASE
         )
-        c = conn.commit()
+        c = conn.cursor()
 
-        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message._guild_id}'")
+        c.execute(f"SELECT lan FROM language WHERE guild_id = '{event.message.guild_id}'")
         result = c.fetchone()
 
         if isinstance(event.exception, lightbulb.errors.NotEnoughArguments):
             if result is not None:
-                embed = hikari.Embed(title = "❌ **შეცდომა**", description = get_lang(result[0], "delete_error"), color = COLOR)
+                embed = hikari.Embed(title = get_lang(result[0], "error"), description = get_lang(result[0], "delete_error"), color = COLOR)
                 return await event.message.respond(embed = embed)
             else:
                 embed = hikari.Embed(title = "❌ **Error**", description = "You need to write ip name.", color = COLOR)
@@ -178,7 +183,7 @@ class Database(lightbulb.Plugin):
             passwd = PASSWD,
             database = DATABASE
         )
-        c = conn.commit()
+        c = conn.cursor()
 
 
         query_list_1 = list()
@@ -193,11 +198,10 @@ class Database(lightbulb.Plugin):
         headers = ["ip","ipname"]
         await ctx.respond(f"```{tabulate(table, headers=headers)}```")
 
-    @lightbulb.command()
-    async def test(self, ctx):
-        print(ctx.get_guild().id)
-
 
 
 def load(bot):
     bot.add_plugin(Database())
+
+def unload(bot):
+    bot.remove_plugin("Database")
